@@ -13,4 +13,5 @@ import java.util.List;
 public interface MemberItemRepository extends JpaRepository<MemberItem, Long> {
 
     MemberItem findByMemberAndItem(Member member, Item item);
+    List<MemberItem> findByMember(Member member);
 }
