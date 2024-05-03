@@ -1,12 +1,8 @@
 package team1.hackerton.domain;
 
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import team1.hackerton.domain.common.BaseEntity;
-import team1.hackerton.domain.enums.Role;
-
 
 
 @Entity
@@ -14,18 +10,18 @@ import team1.hackerton.domain.enums.Role;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Member extends BaseEntity {
+public class Gradient extends BaseEntity {
+
     @Id
-    @Column(name = "member_id")
+    @Column(name = "gradient_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberId;g
+    private Long gradientId;
 
-    private String email;
-
-    private String pwd;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Item item;
 
     private String name;
 
-    private Role role;
-
+    private String description;
 }

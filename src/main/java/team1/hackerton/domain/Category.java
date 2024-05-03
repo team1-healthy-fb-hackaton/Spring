@@ -1,12 +1,11 @@
 package team1.hackerton.domain;
 
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import team1.hackerton.domain.common.BaseEntity;
-import team1.hackerton.domain.enums.Role;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -14,18 +13,15 @@ import team1.hackerton.domain.enums.Role;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Member extends BaseEntity {
+public class Category extends BaseEntity {
+
     @Id
-    @Column(name = "member_id")
+    @Column(name = "category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberId;g
-
-    private String email;
-
-    private String pwd;
+    private Long categoryId;
 
     private String name;
 
-    private Role role;
+    private String url;
 
 }
