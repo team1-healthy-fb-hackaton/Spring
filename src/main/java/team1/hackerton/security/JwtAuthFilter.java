@@ -20,7 +20,6 @@ public class JwtAuthFilter extends GenericFilter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         try{
-            System.out.println("필터~~~~~~~~~~~~~~~~~~~~~`");
             String requestURI = ((HttpServletRequest) request).getRequestURI(); // 스웨거, 로그인 페이지만 토큰없이 접근
             if(requestURI.contains("/auth/sign-up")
                     || requestURI.contains("/auth/login")
@@ -29,7 +28,6 @@ public class JwtAuthFilter extends GenericFilter {
                     || requestURI.contains("/swagger-resources")
                     || requestURI.equals("/swagger-ui.html"))
             {
-                System.out.println("여기로~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
                 chain.doFilter(request,response);
                 return;
             }

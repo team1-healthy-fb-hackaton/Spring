@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import team1.hackerton.domain.common.BaseEntity;
-import team1.hackerton.domain.enums.Role;
 
 
 @Entity
@@ -24,5 +23,12 @@ public class Member extends BaseEntity {
 
     private String name;
 
-    private Role role;
+    private RoleType role;
+
+    public Member(String email, String pwd, String name) {
+        this.email = email;
+        this.pwd = pwd;
+        this.name = name;
+        this.role = RoleType.ROLE_MEMBER;
+    }
 }
