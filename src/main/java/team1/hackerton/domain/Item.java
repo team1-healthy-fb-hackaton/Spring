@@ -40,7 +40,7 @@ public class Item extends BaseEntity {
 
     private int likeCnt;
 
-    @OneToMany(mappedBy = "gradient_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Gradient> gradientList = new ArrayList<>();
 
     private String infoUrl;
