@@ -18,10 +18,8 @@ public class TestController {
     private final TestService testService;
 
     @PostMapping("/record")
-    public  String uploadRecord(
-            @RequestPart(name = "file", required = true) MultipartFile file) throws IOException {
-
-        testService.uploadS3(file);
+    public String uploadRecord(@RequestPart(name = "files") MultipartFile[] files) throws IOException {
+        testService.uploadS3(files);
         return "성공";
     }
 }

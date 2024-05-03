@@ -22,20 +22,19 @@ public class TestService {
 
     private final AmazonS3Client amazonS3Client;
 
-    public void uploadS3(MultipartFile file) throws IOException {
+    public void uploadS3(MultipartFile[] files) throws IOException {
+        if(files != null && files.length > 0) {
+            for(MultipartFile file : files) {
+                String originalFilename = file.getOriginalFilename();
+                String newfileName = UUID.randomUUID()+"_"+originalFilename;
 
+                ObjectMetadata metadata = new ObjectMetadata();
+                metadata.setContentLength(file.getSize());
+                metadata.setContentType(file.getContentType());
 
-        if(file != null) {
-            String originalFilename = file.getOriginalFilename();
-            String newfileName = UUID.randomUUID()+"_"+originalFilename;
-
-            ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentLength(file.getSize());
-            metadata.setContentType(file.getContentType());
-
-            //S3에 저장
-            amazonS3Client.putObject(bucket, "test/"+newfileName, file.getInputStream(), metadata);
-
+                //S3에 저장
+                amazonS3Client.putObject(bucket, newfileName, file.getInputStream(), metadata);
+            }
         }
     }
 }
