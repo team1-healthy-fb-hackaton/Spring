@@ -6,4 +6,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class TestRequestDto {
+
 }

@@ -1,12 +1,10 @@
 package team1.hackerton.domain;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import team1.hackerton.domain.common.BaseEntity;
 import team1.hackerton.domain.enums.Role;
-
 
 
 @Entity
@@ -27,5 +25,4 @@ public class Member extends BaseEntity {
     private String name;
 
     private Role role;
-
 }
