@@ -24,4 +24,6 @@ public class Gradient extends BaseEntity {
     private String name;
 
     private String description;
+
+    private int type;
 }

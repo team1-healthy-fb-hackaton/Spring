@@ -28,6 +28,7 @@ public class Item extends BaseEntity {
 
     private int price;
 
+
     private String url;
 
     private String company;
