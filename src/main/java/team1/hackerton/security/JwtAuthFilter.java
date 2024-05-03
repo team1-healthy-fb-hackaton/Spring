@@ -45,6 +45,7 @@ public class JwtAuthFilter extends GenericFilter {
                     // 현재 Request의 Security Context에 접근권한 설정
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                 }
+
             }
             chain.doFilter(request,response);
         } catch (JwtException e){
