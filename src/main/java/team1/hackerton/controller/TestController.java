@@ -22,7 +22,6 @@ public class TestController {
             @RequestPart(name = "file", required = true) MultipartFile file) throws IOException {
 
         testService.uploadS3(file);
-            return "성공";
-
+        return "성공";
     }
 }
