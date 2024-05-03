@@ -23,7 +23,7 @@ public class AuthService {
                 () -> new EntityNotFoundException("이메일 존재하지 않음")
         );
         if (member.getPwd().equals(dto.getPwd())){
-            String accessToken = jwtUtil.createToken(member.getId());
+            String accessToken = jwtUtil.createToken(member.getMemberId());
             return ResponseEntity.ok(accessToken);
         }
         else {
