@@ -3,6 +3,7 @@ package team1.hackerton.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import team1.hackerton.domain.common.BaseEntity;
+import team1.hackerton.domain.enums.Rate;
 
 
 @Entity
@@ -27,11 +28,18 @@ public class Review extends BaseEntity {
 
     private String content;
 
-    private float rate;
+    private Rate rate;
 
     private boolean tag1;
 
     private boolean tag2;
 
-    private int emoji;
+    public Review(Item item, Member member, String content, Rate rate, boolean tag1, boolean tag2) {
+        this.item = item;
+        this.member = member;
+        this.content = content;
+        this.rate = rate;
+        this.tag1 = tag1;
+        this.tag2 = tag2;
+    }
 }

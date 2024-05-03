@@ -1,5 +1,5 @@
 package team1.hackerton.domain.enums;
 
-public enum Role {
-    ADMIN, MEMBER
+public enum Rate {
+    GOOD, SOSO, BAD
 }

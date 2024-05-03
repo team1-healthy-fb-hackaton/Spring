@@ -49,7 +49,6 @@ import team1.hackerton.security.JwtUtil;
             // 권한 규칙 생성
             http.authorizeHttpRequests(authorize -> authorize
                             .requestMatchers(AUTH_WHITELIST).permitAll() // 로그인 없이 접근이 가능한 api
-                            .requestMatchers("/api/v1/member/**").hasRole("USER")
                             .anyRequest().permitAll()
                     /**
                      * 권한 규칙 요구사항
@@ -57,7 +56,6 @@ import team1.hackerton.security.JwtUtil;
                      * BE는 읽기조회 + 수정 API까지 접근 허용
                      * FE는 읽기 조회 API만 */
             );
-
             return http.build();
         }
 

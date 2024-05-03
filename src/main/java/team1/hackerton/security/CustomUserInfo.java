@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import team1.hackerton.domain.Member;
-import team1.hackerton.domain.RoleType;
+import team1.hackerton.domain.enums.RoleType;
 
 /** 로직 내부에서 유저 정보를 저장해 둘 DTO */
 @NoArgsConstructor

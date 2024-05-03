@@ -29,7 +29,6 @@ public class AuthController {
     public ResponseEntity<String> signup(
             @Valid @RequestBody SignupRequestDto dto
             ){
-        System.out.println("회원가입1111");
         return authService.signup(dto);
     }
 }
