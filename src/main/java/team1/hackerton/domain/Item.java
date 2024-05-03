@@ -2,6 +2,7 @@ package team1.hackerton.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.stereotype.Service;
 import team1.hackerton.domain.common.BaseEntity;
 
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.List;
 @Entity
 @Getter
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Item extends BaseEntity {
 

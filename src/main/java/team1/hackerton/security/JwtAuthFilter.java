@@ -25,6 +25,7 @@ public class JwtAuthFilter extends GenericFilter {
                     || requestURI.contains("/auth/login")
                     || requestURI.contains("/swagger-ui/")
                     || requestURI.contains("/v3/api-docs")
+                    || requestURI.contains("/record")
                     || requestURI.contains("/swagger-resources")
                     || requestURI.equals("/swagger-ui.html"))
             {
