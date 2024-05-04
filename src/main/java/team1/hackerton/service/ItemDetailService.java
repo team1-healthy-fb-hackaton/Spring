@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import team1.hackerton.domain.*;
 import team1.hackerton.dto.process.TotListProcessDto;
 import team1.hackerton.dto.request.CreateCategoryRequestDto;
+import team1.hackerton.dto.request.CreateGradientRequestDto;
 import team1.hackerton.dto.request.CreateItemRequestDto;
 import team1.hackerton.dto.request.LikeItemRequestDto;
+import team1.hackerton.dto.process.ItemDetailProcessDto;
 import team1.hackerton.dto.response.ItemDetailResponseDto;
 import team1.hackerton.dto.response.TotListResponseDto;
 import team1.hackerton.repository.*;
@@ -17,7 +19,6 @@ import team1.hackerton.security.CustomUserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,23 +37,25 @@ public class ItemDetailService {
     @Value("${cloud.aws.s3.uploadPath}")
     private String defaultUrl;
 
-//    public ResponseEntity<ItemDetailResponseDto.ItemDetailDto> readItemDetail(CustomUserDetails userDetails, Long itemId) {
-//        Long memberId = userDetails.getMemberId();
-//        Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("에러"));
-//        Item item = itemRepository.findById(itemId).orElseThrow(() -> new EntityNotFoundException("에러"));
-//
-//        List<Gradient> gradientList = gradientRepository.findByItem(item);
-//
-//
-//        MemberItem memberItem = memberItemRepository.findByMemberAndItem(member, item);
-//        if (memberItem.getItem() == null) {
-//            ItemDetailResponseDto.ItemDetailDto dto = ItemDetailConverter.toDto(item, gradientList, false);
-//            return ResponseEntity.ok(dto);
-//        }
-//
-//        ItemDetailResponseDto.ItemDetailDto dto = ItemDetailConverter.toDto(item, gradientList, true);
-//        return ResponseEntity.ok(dto);
-//    }
+    public ResponseEntity<ItemDetailResponseDto> readItemDetail(CustomUserDetails userDetails, Long itemId) {
+
+        Item item = itemRepository.findById(itemId).orElseThrow(() -> new EntityNotFoundException("에러"));
+        ItemDetailProcessDto processDto = ItemDetailProcessDto.builder()
+                .itemId(item.getItemId())
+                .zeroKcal(item.getZeroKcal())
+                .zeroSugar(item.getZeroSugar())
+                .itemUrl(item.getUrl())
+                .company(item.getCompany())
+                .store(item.getStore())
+                .name(item.getName())
+                .price(item.getPrice())
+                .nutritionUrl(item.getNutritionUrl())
+                .like(item.getLikeCnt())
+                .infoUrl(item.getInfoUrl()).build();
+
+        List<Gradient> gradientList = item.getGradientList();
+        return ResponseEntity.ok(new ItemDetailResponseDto(processDto, gradientList));
+    }
 
     public ResponseEntity<String> likeItem(CustomUserDetails userDetails, LikeItemRequestDto dto){
         Long memberId = userDetails.getMemberId();
@@ -100,6 +103,13 @@ public class ItemDetailService {
         Category category = categoryRepository.findById(dto.getCategory_id()).orElseThrow(() -> new EntityNotFoundException("에러"));
         Item item = new Item(dto.getLike_cnt(), dto.getPrice(), dto.getZero_kcal(), dto.getZero_sugar(), category, dto.getCompany());
         itemRepository.save(item);
+        return ResponseEntity.ok("ok");
+    }
+
+    public ResponseEntity<String> addGradient(CreateGradientRequestDto dto){
+        Item item = itemRepository.findById(dto.getItemId()).orElseThrow(() -> new EntityNotFoundException("에러"));
+        Gradient gradient = new Gradient(item, dto.getName(), dto.getDescription(), dto.getType());
+        gradientRepository.save(gradient);
         return ResponseEntity.ok("ok");
     }
 
