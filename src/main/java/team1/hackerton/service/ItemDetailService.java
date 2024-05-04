@@ -5,19 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import team1.hackerton.converter.ItemDetailConverter;
-import team1.hackerton.domain.Gradient;
-import team1.hackerton.domain.Item;
-import team1.hackerton.domain.Member;
-import team1.hackerton.domain.MemberItem;
+import team1.hackerton.domain.*;
 import team1.hackerton.dto.process.TotListProcessDto;
+import team1.hackerton.dto.request.CreateCategoryRequestDto;
+import team1.hackerton.dto.request.CreateItemRequestDto;
 import team1.hackerton.dto.request.LikeItemRequestDto;
 import team1.hackerton.dto.response.ItemDetailResponseDto;
 import team1.hackerton.dto.response.TotListResponseDto;
-import team1.hackerton.repository.GradientRepository;
-import team1.hackerton.repository.ItemRepository;
-import team1.hackerton.repository.MemberItemRepository;
-import team1.hackerton.repository.MemberRepository;
+import team1.hackerton.repository.*;
 import team1.hackerton.security.CustomUserDetails;
 
 import java.util.ArrayList;
@@ -31,7 +26,7 @@ public class ItemDetailService {
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
     private final GradientRepository gradientRepository;
-
+    private final CategoryRepository categoryRepository;
     private final MemberItemRepository memberItemRepository;
 
 
@@ -41,23 +36,23 @@ public class ItemDetailService {
     @Value("${cloud.aws.s3.uploadPath}")
     private String defaultUrl;
 
-    public ResponseEntity<ItemDetailResponseDto.ItemDetailDto> readItemDetail(CustomUserDetails userDetails, Long itemId) {
-        Long memberId = userDetails.getMemberId();
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("에러"));
-        Item item = itemRepository.findById(itemId).orElseThrow(() -> new EntityNotFoundException("에러"));
-
-        List<Gradient> gradientList = gradientRepository.findByItem(item);
-
-
-        MemberItem memberItem = memberItemRepository.findByMemberAndItem(member, item);
-        if (memberItem.getItem() == null) {
-            ItemDetailResponseDto.ItemDetailDto dto = ItemDetailConverter.toDto(item, gradientList, false);
-            return ResponseEntity.ok(dto);
-        }
-
-        ItemDetailResponseDto.ItemDetailDto dto = ItemDetailConverter.toDto(item, gradientList, true);
-        return ResponseEntity.ok(dto);
-    }
+//    public ResponseEntity<ItemDetailResponseDto.ItemDetailDto> readItemDetail(CustomUserDetails userDetails, Long itemId) {
+//        Long memberId = userDetails.getMemberId();
+//        Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("에러"));
+//        Item item = itemRepository.findById(itemId).orElseThrow(() -> new EntityNotFoundException("에러"));
+//
+//        List<Gradient> gradientList = gradientRepository.findByItem(item);
+//
+//
+//        MemberItem memberItem = memberItemRepository.findByMemberAndItem(member, item);
+//        if (memberItem.getItem() == null) {
+//            ItemDetailResponseDto.ItemDetailDto dto = ItemDetailConverter.toDto(item, gradientList, false);
+//            return ResponseEntity.ok(dto);
+//        }
+//
+//        ItemDetailResponseDto.ItemDetailDto dto = ItemDetailConverter.toDto(item, gradientList, true);
+//        return ResponseEntity.ok(dto);
+//    }
 
     public ResponseEntity<String> likeItem(CustomUserDetails userDetails, LikeItemRequestDto dto){
         Long memberId = userDetails.getMemberId();
@@ -93,6 +88,19 @@ public class ItemDetailService {
         arr1.add(new TotListProcessDto("라라스윗 파인트 초코 ", "https://zzero-bucket.s3.ap-northeast-2.amazonaws.com/22.jpg"));
 
         return ResponseEntity.ok(new TotListResponseDto(arr1));
+    }
+
+    public ResponseEntity<String> addCategory(CustomUserDetails userDetails, CreateCategoryRequestDto dto){
+        Category category = new Category(dto.getName(), dto.getUrl());
+        categoryRepository.save(category);
+        return ResponseEntity.ok("ok");
+    }
+
+    public ResponseEntity<String> addItem(CreateItemRequestDto dto){
+        Category category = categoryRepository.findById(dto.getCategory_id()).orElseThrow(() -> new EntityNotFoundException("에러"));
+        Item item = new Item(dto.getLike_cnt(), dto.getPrice(), dto.getZero_kcal(), dto.getZero_sugar(), category, dto.getCompany());
+        itemRepository.save(item);
+        return ResponseEntity.ok("ok");
     }
 
 }

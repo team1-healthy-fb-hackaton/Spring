@@ -48,8 +48,18 @@ public class Item extends BaseEntity {
 
     private String infoUrl;
 
-    private boolean zeroSugar;
+    private int zeroSugar;
 
-    private boolean zeroKcal;
+    private int zeroKcal;
 
+
+    public Item(int likeCnt, int price, int zeroKcal, int zeroSugar, Category category, String company) {
+        super();
+        this.likeCnt = likeCnt;
+        this.price = price;
+        this.zeroKcal = zeroKcal;
+        this.zeroSugar = zeroSugar;
+        this.category = category;
+        this.company = company;
+    }
 }

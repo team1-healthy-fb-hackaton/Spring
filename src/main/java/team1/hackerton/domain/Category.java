@@ -24,4 +24,8 @@ public class Category extends BaseEntity {
 
     private String url;
 
+    public Category(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
 }

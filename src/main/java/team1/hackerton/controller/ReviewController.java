@@ -16,7 +16,7 @@ public class ReviewController {
 
     public final ReviewService reviewService;
 
-    @PostMapping("/")
+    @PostMapping("/write")
     public ResponseEntity<String> write(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody CreateReviewRequestDto dto
