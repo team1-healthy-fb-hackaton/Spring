@@ -1,14 +1,12 @@
 package team1.hackerton.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.persistence.PreUpdate;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import team1.hackerton.domain.Member;
 import team1.hackerton.dto.request.CreateCategoryRequestDto;
+import team1.hackerton.dto.request.CreateGradientRequestDto;
 import team1.hackerton.dto.request.CreateItemRequestDto;
 import team1.hackerton.dto.request.LikeItemRequestDto;
 import team1.hackerton.dto.response.ItemDetailResponseDto;
@@ -40,14 +38,20 @@ public class ItemController {
         return itemDetailService.addItem(dto);
     }
 
+    @PostMapping("/addGredient")
+    @Operation(summary = "성분 생성", description = "성분 생성")
+    public ResponseEntity<String> addGradient(
+            @RequestBody CreateGradientRequestDto dto
+    ){
+        return itemDetailService.addGradient(dto);
+    }
 
-//    @Operation(summary = "상품디테일")
-//    @GetMapping("/detail/{itemId}")
-//    public ResponseEntity<ItemDetailResponseDto.ItemDetailDto> readItemDetail(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable(name="itemId") Long itemId){
-//
-//        return itemDetailService.readItemDetail(userDetails, itemId);
-//
-//    }
+
+    @Operation(summary = "상품 상세 목록")
+    @GetMapping("/detail/{itemId}")
+    public ResponseEntity<ItemDetailResponseDto> readItemDetail(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable(name="itemId") Long itemId){
+        return itemDetailService.readItemDetail(userDetails, itemId);
+    }
 
     @PostMapping("/detail")
     @Operation(summary = "상품 좋아요")

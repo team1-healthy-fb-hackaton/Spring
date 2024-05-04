@@ -3,6 +3,7 @@ package team1.hackerton.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import team1.hackerton.domain.common.BaseEntity;
+import team1.hackerton.domain.enums.Type;
 
 
 @Entity
@@ -25,5 +26,12 @@ public class Gradient extends BaseEntity {
 
     private String description;
 
-    private int type;
+    private Type type;
+
+    public Gradient(Item item, String name, String description, Type type) {
+        this.item = item;
+        this.name = name;
+        this.description = description;
+        this.type = type;
+    }
 }
