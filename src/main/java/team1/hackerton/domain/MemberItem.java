@@ -26,4 +26,8 @@ public class MemberItem extends BaseEntity {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    public MemberItem(Member member, Item item) {
+        this.member = member;
+        this.item = item;
+    }
 }
