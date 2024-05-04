@@ -1,5 +1,6 @@
 package team1.hackerton.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +18,7 @@ public class ReviewController {
     public final ReviewService reviewService;
 
     @PostMapping("/write")
+    @Operation(summary = "리뷰 작성하기", description = "리뷰 작성하기 50자 이내")
     public ResponseEntity<String> write(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody CreateReviewRequestDto dto
@@ -25,6 +27,7 @@ public class ReviewController {
     }
 
     @GetMapping("/{itemId}")
+    @Operation(summary = "리뷰 목록 조회하기", description = "리뷰 목록")
     public ResponseEntity<ListReviewResponseDto> list(
             @PathVariable(name = "itemId") Long id
     ){

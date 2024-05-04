@@ -24,6 +24,7 @@ public class ItemController {
     private final ItemDetailService itemDetailService;
 
     @PostMapping("/addCategory")
+    @Operation(summary = "카테고리 생성", description = "카테고리 생성")
     public ResponseEntity<String> addCategory(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody CreateCategoryRequestDto dto
@@ -32,6 +33,7 @@ public class ItemController {
     }
 
     @PostMapping("/addItem")
+    @Operation(summary = "상품 생성", description = "상품 생성")
     public ResponseEntity<String> addItem(
             @RequestBody CreateItemRequestDto dto
             ){
@@ -57,6 +59,7 @@ public class ItemController {
     }
 
     @GetMapping("/list")
+    @Operation(summary = "상품 조회")
     public ResponseEntity<TotListResponseDto> list(
             @AuthenticationPrincipal CustomUserDetails userDetails
     ){

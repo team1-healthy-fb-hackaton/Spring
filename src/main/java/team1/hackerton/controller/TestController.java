@@ -1,6 +1,7 @@
 package team1.hackerton.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ public class TestController {
     private final TestService testService;
 
     @PostMapping("/record")
+    @Operation(summary = "이미지 AWS s3에 업로드")
     public String uploadRecord(@RequestPart(name = "files") MultipartFile[] files) throws IOException {
         testService.uploadS3(files);
         return "성공";
